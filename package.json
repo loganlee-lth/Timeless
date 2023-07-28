@@ -5,7 +5,7 @@
   "description": "A full stack JavaScript solo project.",
   "type": "module",
   "scripts": {
-    "start": "NODE_ENV=production node server/server.js",
+    "start": "NODE_ENV=production ts-node-esm server/server.ts",
     "build": "npm run build --prefix client",
     "db:import": "sh database/import.sh",
     "dev:db": "pgweb --db=`awk 'BEGIN { FS = \"/\" } ; /DATABASE_URL=/ {print $NF}' server/.env`",
@@ -19,6 +19,8 @@
     "prepare": "husky install"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.2.0",
+    "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard": "^17.0.0",
@@ -34,5 +36,8 @@
     "stylelint": "^15.4.0",
     "stylelint-config-recommended": "^11.0.0",
     "stylelint-config-standard": "^32.0.0"
+  },
+  "dependencies": {
+    "ts-node": "^10.9.1"
   }
 }

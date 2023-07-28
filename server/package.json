@@ -4,8 +4,13 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "ts-node-esm server.ts",
+    "dev": "nodemon server.ts"
+  },
+  "nodemonConfig": {
+    "execMap": {
+      "ts": "ts-node-esm"
+    }
   },
   "dependencies": {
     "argon2": "^0.29.1",
@@ -15,6 +20,8 @@
     "pg": "^8.7.3"
   },
   "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.4.5",
     "nodemon": "^2.0.16"
   }
 }

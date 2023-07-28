@@ -4,8 +4,8 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start-ts": "ts-node-esm server.ts",
-    "dev-ts": "nodemon server.ts"
+    "start": "ts-node-esm server.ts",
+    "dev": "nodemon server.ts"
   },
   "nodemonConfig": {
     "execMap": {

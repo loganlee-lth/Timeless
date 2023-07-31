@@ -2,7 +2,7 @@
   "name": "final-project-template-server",
   "version": "1.0.0",
   "type": "module",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "start": "ts-node-esm server.ts",
     "dev": "nodemon server.ts"

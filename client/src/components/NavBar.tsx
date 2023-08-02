@@ -91,7 +91,7 @@ export default function NavBar(): JSX.Element {
         </Dialog>
       </Transition.Root>
 
-      <header className="fixed top-0 left-0 z-10 w-full opacity-95">
+      <header className="sticky top-0 left-0 z-10 w-full opacity-95">
         <nav aria-label="Top">
           {/* Top navigation */}
           <div className="bg-gray-900">

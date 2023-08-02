@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { Navigation } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
@@ -8,20 +9,11 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-type Page = {
-  name: string;
-  href: string;
-};
-
-type Navigation = {
-  pages: Page[];
-};
-
 const navigation: Navigation = {
   pages: [
-    { name: 'Ready to Wear', href: '#' },
-    { name: 'Shoes', href: '#' },
-    { name: 'Accessories', href: '#' },
+    { name: 'Ready to Wear', to: '/' },
+    { name: 'Shoes', to: '/' },
+    { name: 'Accessories', to: '/' },
   ],
 };
 
@@ -67,11 +59,11 @@ export default function NavBar(): JSX.Element {
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   {navigation.pages.map((page) => (
                     <div key={page.name} className="flow-root">
-                      <a
-                        href={page.href}
+                      <Link
+                        to={page.to}
                         className="-m-2 block p-2 font-medium text-gray-900">
                         {page.name}
-                      </a>
+                      </Link>
                     </div>
                   ))}
                 </div>
@@ -127,7 +119,7 @@ export default function NavBar(): JSX.Element {
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex lg:flex-1 lg:items-center">
                     <Link to="/">
-                      <span className="sr-only">Your Company</span>
+                      <span className="sr-only">Timeless Fashion</span>
                       <img
                         className="h-8 w-auto"
                         src="/images/logo.svg"
@@ -141,12 +133,12 @@ export default function NavBar(): JSX.Element {
                     <Popover.Group className="inset-x-0 bottom-0 px-4">
                       <div className="flex h-full justify-center space-x-8">
                         {navigation.pages.map((page) => (
-                          <a
+                          <Link
                             key={page.name}
-                            href={page.href}
+                            to={page.to}
                             className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
                             {page.name}
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     </Popover.Group>
@@ -176,7 +168,7 @@ export default function NavBar(): JSX.Element {
 
                   {/* Logo (lg-) */}
                   <Link to="/" className="lg:hidden">
-                    <span className="sr-only">Your Company</span>
+                    <span className="sr-only">Timeless Fashion</span>
                     <img src="/images/logo.svg" alt="" className="h-8 w-auto" />
                   </Link>
 
@@ -200,9 +192,7 @@ export default function NavBar(): JSX.Element {
                           <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                             0
                           </span>
-                          <span className="sr-only">
-                            items in cart, view bag
-                          </span>
+                          <span className="sr-only">Items in cart</span>
                         </Link>
                       </div>
                     </div>

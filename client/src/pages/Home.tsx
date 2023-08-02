@@ -1,6 +1,7 @@
+import { Collection } from '../lib/types';
 import { Link } from 'react-router-dom';
 
-const collections = [
+const collections: Collection[] = [
   {
     name: 'Placeholder',
     imageSrc: '/images/1200x1200.svg',
@@ -21,7 +22,7 @@ const collections = [
   },
 ];
 
-export default function Home() {
+export default function Home(): JSX.Element {
   return (
     <div className="bg-white">
       {/* Hero section */}

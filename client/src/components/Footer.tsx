@@ -1,6 +1,15 @@
 import { ReactElement } from 'react';
-import { FooterNavigation } from '../lib/types';
 import { Link } from 'react-router-dom';
+
+type NavigationItem = {
+  name: string;
+  to: string;
+};
+
+type FooterNavigation = {
+  shop: NavigationItem[];
+  connect: NavigationItem[];
+};
 
 const footerNavigation: FooterNavigation = {
   shop: [

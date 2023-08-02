@@ -1,6 +1,12 @@
 import { ReactElement } from 'react';
-import { Collection } from '../lib/types';
 import { Link } from 'react-router-dom';
+
+export type Collection = {
+  name: string;
+  imageSrc: string;
+  imageAlt: string;
+  description: string;
+};
 
 const collections: Collection[] = [
   {

@@ -1,5 +1,4 @@
 import { Fragment, ReactElement, useState } from 'react';
-import { Navigation } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
@@ -8,6 +7,15 @@ import {
   ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
+
+type Page = {
+  name: string;
+  to: string;
+};
+
+type Navigation = {
+  pages: Page[];
+};
 
 const navigation: Navigation = {
   pages: [

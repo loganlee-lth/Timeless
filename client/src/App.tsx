@@ -8,17 +8,13 @@ import SignIn from './pages/SignIn';
 function App() {
   return (
     <BrowserRouter>
-      <header>
-        <NavBar />
-      </header>
+      <NavBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </BrowserRouter>
   );
 }

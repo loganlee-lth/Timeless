@@ -7,7 +7,16 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-const navigation = {
+type Page = {
+  name: string;
+  href: string;
+};
+
+type Navigation = {
+  pages: Page[];
+};
+
+const navigation: Navigation = {
   pages: [
     { name: 'Ready to Wear', href: '#' },
     { name: 'Shoes', href: '#' },
@@ -16,7 +25,7 @@ const navigation = {
 };
 
 export default function NavBar(): JSX.Element {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div className="bg-white">

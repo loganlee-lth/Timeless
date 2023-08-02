@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, ReactElement, useState } from 'react';
 import { Navigation } from '../lib/types';
 import { Link } from 'react-router-dom';
 import { Dialog, Popover, Transition } from '@headlessui/react';
@@ -17,7 +17,7 @@ const navigation: Navigation = {
   ],
 };
 
-export default function NavBar(): JSX.Element {
+export default function NavBar(): ReactElement {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   return (

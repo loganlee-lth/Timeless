@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { Collection } from '../lib/types';
 import { Link } from 'react-router-dom';
 
@@ -22,7 +23,7 @@ const collections: Collection[] = [
   },
 ];
 
-export default function Home(): JSX.Element {
+export default function Home(): ReactElement {
   return (
     <div className="bg-white">
       {/* Hero section */}

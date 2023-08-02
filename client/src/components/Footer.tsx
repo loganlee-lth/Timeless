@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { FooterNavigation } from '../lib/types';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +14,7 @@ const footerNavigation: FooterNavigation = {
   ],
 };
 
-export default function Footer(): JSX.Element {
+export default function Footer(): ReactElement {
   return (
     <div className="bg-white">
       <footer aria-labelledby="footer-heading" className="bg-gray-900">

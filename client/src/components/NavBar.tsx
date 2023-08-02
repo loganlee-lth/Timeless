@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -25,12 +26,12 @@ const navigation: Navigation = {
 };
 
 export default function NavBar(): JSX.Element {
-  const [open, setOpen] = useState<boolean>(false);
+  const [isOpen, setOpen] = useState<boolean>(false);
 
   return (
     <div className="bg-white">
       {/* Mobile menu */}
-      <Transition.Root show={open} as={Fragment}>
+      <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
             as={Fragment}
@@ -77,18 +78,18 @@ export default function NavBar(): JSX.Element {
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <Link
+                      to="/signup"
                       className="-m-2 block p-2 font-medium text-gray-900">
                       Create an account
-                    </a>
+                    </Link>
                   </div>
                   <div className="flow-root">
-                    <a
-                      href="#"
+                    <Link
+                      to="/signin"
                       className="-m-2 block p-2 font-medium text-gray-900">
                       Sign in
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6"></div>
@@ -104,16 +105,16 @@ export default function NavBar(): JSX.Element {
           <div className="bg-gray-900">
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
               <div className="flex items-center space-x-6">
-                <a
-                  href="#"
+                <Link
+                  to="/signin"
                   className="text-sm font-medium text-white hover:text-gray-100">
                   Sign in
-                </a>
-                <a
-                  href="#"
+                </Link>
+                <Link
+                  to="/signup"
                   className="text-sm font-medium text-white hover:text-gray-100">
                   Create an account
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -125,14 +126,14 @@ export default function NavBar(): JSX.Element {
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
                   <div className="hidden lg:flex lg:flex-1 lg:items-center">
-                    <a href="#">
+                    <Link to="/">
                       <span className="sr-only">Your Company</span>
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                        src="/images/logo.svg"
                         alt=""
                       />
-                    </a>
+                    </Link>
                   </div>
 
                   <div className="hidden h-full lg:flex">
@@ -162,39 +163,35 @@ export default function NavBar(): JSX.Element {
                     </button>
 
                     {/* Search */}
-                    <a
-                      href="#"
+                    <Link
+                      to="/"
                       className="ml-2 p-2 text-gray-400 hover:text-gray-500">
                       <span className="sr-only">Search</span>
                       <MagnifyingGlassIcon
                         className="h-6 w-6"
                         aria-hidden="true"
                       />
-                    </a>
+                    </Link>
                   </div>
 
                   {/* Logo (lg-) */}
-                  <a href="#" className="lg:hidden">
+                  <Link to="/" className="lg:hidden">
                     <span className="sr-only">Your Company</span>
-                    <img
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                      alt=""
-                      className="h-8 w-auto"
-                    />
-                  </a>
+                    <img src="/images/logo.svg" alt="" className="h-8 w-auto" />
+                  </Link>
 
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
-                      <a
-                        href="#"
+                      <Link
+                        to="/"
                         className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">
                         Search
-                      </a>
+                      </Link>
 
                       {/* Cart */}
                       <div className="ml-4 flow-root lg:ml-8">
-                        <a
-                          href="#"
+                        <Link
+                          to="/"
                           className="group -m-2 flex items-center p-2">
                           <ShoppingBagIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
@@ -206,7 +203,7 @@ export default function NavBar(): JSX.Element {
                           <span className="sr-only">
                             items in cart, view bag
                           </span>
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

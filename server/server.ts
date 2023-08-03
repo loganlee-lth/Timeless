@@ -33,6 +33,7 @@ app.get('/api/products', async (req, res, next) => {
             "productCategoryId",
             "inventoryQuantity",
             "imageUrl",
+            "createdAt",
         from "products"
     `;
     const result = await db.query(sql);

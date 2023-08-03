@@ -23,7 +23,7 @@ app.use(express.static(reactStaticDir));
 app.use(express.static(uploadsStaticDir));
 app.use(express.json());
 
-app.get('/api/products', async (req, res, next) => {
+app.get('/api/product', async (req, res, next) => {
   try {
     const sql = `
       select "productId",
@@ -33,8 +33,8 @@ app.get('/api/products', async (req, res, next) => {
             "productCategoryId",
             "inventoryQuantity",
             "imageUrl",
-            "createdAt",
-        from "products"
+            "createdAt"
+        from "product"
     `;
     const result = await db.query(sql);
     res.json(result.rows);

@@ -20,6 +20,8 @@
     "prod:db:import": "sh database/prod-import.sh"
   },
   "devDependencies": {
+    "@tailwindcss/container-queries": "^0.1.1",
+    "@types/pg": "^8.10.2",
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "eslint": "^8.38.0",

@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+// import ClientError from './lib/client-error.js';
 import errorMiddleware from './lib/error-middleware.js';
 import pg from 'pg';
 
@@ -22,8 +23,23 @@ app.use(express.static(reactStaticDir));
 app.use(express.static(uploadsStaticDir));
 app.use(express.json());
 
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello, World!' });
+app.get('/api/products', async (req, res, next) => {
+  try {
+    const sql = `
+      select "productId",
+            "name",
+            "description",
+            "price",
+            "productCategoryId",
+            "inventoryQuantity",
+            "imageUrl",
+        from "products"
+    `;
+    const result = await db.query(sql);
+    res.json(result.rows);
+  } catch (err) {
+    next(err);
+  }
 });
 
 /**

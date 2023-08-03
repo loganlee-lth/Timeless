@@ -25,11 +25,11 @@ const navigation: Navigation = {
   ],
 };
 
-export default function NavBar(): ReactElement {
+export default function Header(): ReactElement {
   const [isOpen, setOpen] = useState<boolean>(false);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white sticky top-0 left-0 z-10 w-full opacity-95">
       {/* Mobile menu */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -99,7 +99,7 @@ export default function NavBar(): ReactElement {
         </Dialog>
       </Transition.Root>
 
-      <header className="sticky top-0 left-0 z-10 w-full opacity-95">
+      <header className="relative">
         <nav aria-label="Top">
           {/* Top navigation */}
           <div className="bg-gray-900">

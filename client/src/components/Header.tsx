@@ -19,7 +19,7 @@ type Navigation = {
 
 const navigation: Navigation = {
   pages: [
-    { name: 'Ready to Wear', to: '/' },
+    { name: 'Ready to Wear', to: '/catalog' },
     { name: 'Shoes', to: '/' },
     { name: 'Accessories', to: '/' },
   ],

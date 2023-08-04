@@ -28,9 +28,10 @@ app.get('/api/product', async (req, res, next) => {
     const sql = `
       select "productId",
             "name",
-            "description",
+            "shortDescription",
+            "longDescription",
             "price",
-            "productCategoryId",
+            "category",
             "inventoryQuantity",
             "imageUrl",
             "createdAt"

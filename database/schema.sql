@@ -22,23 +22,14 @@ CREATE TABLE "public"."user" (
 CREATE TABLE "public"."product" (
 	"productId" serial NOT NULL,
 	"name" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
+	"shortDescription" TEXT NOT NULL,
+	"longDescription" TEXT NOT NULL,
 	"price" DECIMAL NOT NULL,
-	"productCategoryId" integer NOT NULL,
+	"category" TEXT NOT NULL,
 	"inventoryQuantity" integer NOT NULL,
 	"imageUrl" TEXT NOT NULL,
 	"createdAt" timestamptz NOT NULL DEFAULT now(),
 	CONSTRAINT "product_pk" PRIMARY KEY ("productId")
-) WITH (
-  OIDS=FALSE
-);
-
-CREATE TABLE "public"."productCategory" (
-	"productCategoryId" serial NOT NULL,
-	"name" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
-	"createdAt" timestamptz NOT NULL DEFAULT now(),
-	CONSTRAINT "productCategory_pk" PRIMARY KEY ("productCategoryId")
 ) WITH (
   OIDS=FALSE
 );
@@ -77,9 +68,10 @@ CREATE TABLE "public"."orderDetails" (
 	"orderId" integer NOT NULL,
 	"productId" integer NOT NULL,
 	"name" TEXT NOT NULL,
-	"description" TEXT NOT NULL,
+	"shortDescription" TEXT NOT NULL,
+	"longDescription" TEXT NOT NULL,
 	"price" DECIMAL NOT NULL,
-	"productCategoryId" integer NOT NULL,
+	"category" TEXT NOT NULL,
 	"inventoryQuantity" integer NOT NULL,
 	"imageUrl" TEXT NOT NULL,
 	"quantity" integer NOT NULL,
@@ -88,7 +80,6 @@ CREATE TABLE "public"."orderDetails" (
   OIDS=FALSE
 );
 
-ALTER TABLE "product" ADD CONSTRAINT "product_fk0" FOREIGN KEY ("productCategoryId") REFERENCES "productCategory"("productCategoryId");
 
 
 ALTER TABLE "shoppingCart" ADD CONSTRAINT "shoppingCart_fk0" FOREIGN KEY ("userId") REFERENCES "user"("userId");
@@ -100,4 +91,3 @@ ALTER TABLE "order" ADD CONSTRAINT "order_fk0" FOREIGN KEY ("userId") REFERENCES
 
 ALTER TABLE "orderDetails" ADD CONSTRAINT "orderDetails_fk0" FOREIGN KEY ("orderId") REFERENCES "order"("orderId");
 ALTER TABLE "orderDetails" ADD CONSTRAINT "orderDetails_fk1" FOREIGN KEY ("productId") REFERENCES "product"("productId");
-ALTER TABLE "orderDetails" ADD CONSTRAINT "orderDetails_fk2" FOREIGN KEY ("productCategoryId") REFERENCES "productCategory"("productCategoryId");

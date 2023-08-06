@@ -11,8 +11,6 @@ CREATE TABLE "public"."user" (
 	"username" TEXT NOT NULL UNIQUE,
 	"email" TEXT NOT NULL UNIQUE,
 	"hashedPassword" TEXT NOT NULL,
-	"firstName" TEXT NOT NULL,
-	"lastName" TEXT NOT NULL,
 	"createdAt" timestamptz NOT NULL DEFAULT now(),
 	CONSTRAINT "user_pk" PRIMARY KEY ("userId")
 ) WITH (

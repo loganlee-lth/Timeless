@@ -33,7 +33,7 @@ app.post('/api/auth/sign-up', async (req, res, next) => {
     }
     const hashedPassword = await argon2.hash(password);
     const sql = `
-      insert into "users" ("username", "hashedPassword")
+      insert into "user" ("username", "hashedPassword")
         values ($1, $2)
         returning "userId", "username", "createdAt"
     `;
@@ -55,7 +55,7 @@ app.post('/api/auth/sign-in', async (req, res, next) => {
     const sql = `
       select "userId",
             "hashedPassword"
-        from "users"
+        from "user"
         where "username" = $1
     `;
     const params = [username];

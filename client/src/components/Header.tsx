@@ -1,5 +1,6 @@
-import { Fragment, ReactElement, useState } from 'react';
+import { Fragment, ReactElement, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import AppContext from '../context/AppContext';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -27,6 +28,8 @@ const navigation: Navigation = {
 
 export default function Header(): ReactElement {
   const [isOpen, setOpen] = useState<boolean>(false);
+  const { user, handleSignOut } = useContext(AppContext);
+  console.log(user);
 
   return (
     <div className="bg-white sticky top-0 left-0 z-10 w-full opacity-95">
@@ -77,20 +80,34 @@ export default function Header(): ReactElement {
                 </div>
 
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
-                    <Link
-                      to="/signup"
-                      className="-m-2 block p-2 font-medium text-gray-900">
-                      Create an account
-                    </Link>
-                  </div>
-                  <div className="flow-root">
-                    <Link
-                      to="/signin"
-                      className="-m-2 block p-2 font-medium text-gray-900">
-                      Sign in
-                    </Link>
-                  </div>
+                  {user && (
+                    <div className="flow-root">
+                      <Link
+                        to="/"
+                        onClick={handleSignOut}
+                        className="-m-2 block p-2 font-medium text-gray-900">
+                        Sign out
+                      </Link>
+                    </div>
+                  )}
+                  {!user && (
+                    <>
+                      <div className="flow-root">
+                        <Link
+                          to="/sign-up"
+                          className="-m-2 block p-2 font-medium text-gray-900">
+                          Create an account
+                        </Link>
+                      </div>
+                      <div className="flow-root">
+                        <Link
+                          to="/sign-in"
+                          className="-m-2 block p-2 font-medium text-gray-900">
+                          Sign in
+                        </Link>
+                      </div>
+                    </>
+                  )}
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6"></div>
               </Dialog.Panel>
@@ -104,18 +121,30 @@ export default function Header(): ReactElement {
           {/* Top navigation */}
           <div className="bg-gray-900">
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center space-x-6">
-                <Link
-                  to="/signin"
-                  className="text-sm font-medium text-white hover:text-gray-100">
-                  Sign in
-                </Link>
-                <Link
-                  to="/signup"
-                  className="text-sm font-medium text-white hover:text-gray-100">
-                  Create an account
-                </Link>
-              </div>
+              {user && (
+                <div className="flex items-center space-x-6">
+                  <Link
+                    to="/"
+                    onClick={handleSignOut}
+                    className="text-sm font-medium text-white hover:text-gray-100">
+                    Sign out
+                  </Link>
+                </div>
+              )}
+              {!user && (
+                <div className="flex items-center space-x-6">
+                  <Link
+                    to="/sign-in"
+                    className="text-sm font-medium text-white hover:text-gray-100">
+                    Sign in
+                  </Link>
+                  <Link
+                    to="/sign-up"
+                    className="text-sm font-medium text-white hover:text-gray-100">
+                    Create an account
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
 

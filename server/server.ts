@@ -209,11 +209,12 @@ app.put(
       const sql = `
       update "shoppingCartItems"
         set "quantity" = $3
-        where "shoppingCartId" = $1 and "productId" = $2;
+        where "shoppingCartId" = $1 and "productId" = $2
+        returning *;
     `;
       const params = [shoppingCartId, productId, quantity];
       const result = await db.query(sql, params);
-      res.status(204).json(result.rows);
+      res.status(200).json(result.rows);
     } catch (err) {
       next(err);
     }

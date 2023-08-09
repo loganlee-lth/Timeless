@@ -1,4 +1,4 @@
-import { ReactElement, useState, useEffect, useContext } from 'react';
+import { ReactElement, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchCart, toDollars, removeItem, updateQuantity } from '../lib';
 import AppContext from '../context/AppContext';
@@ -6,7 +6,6 @@ import ShoppingCartContext from '../context/ShoppingCartContext';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 export default function ShoppingCart(): ReactElement {
-  const [error, setError] = useState<unknown>();
   const { user, token } = useContext(AppContext);
   const { cart, setCart } = useContext(ShoppingCartContext);
 
@@ -28,14 +27,20 @@ export default function ShoppingCart(): ReactElement {
     quantity: number
   ) {
     try {
+      const updatedCart = cart.map((product) =>
+        product.productId === +productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      );
       await updateQuantity(
         shoppingCartId,
-        productId,
+        +productId,
         quantity + 1,
         token as string
       );
+      setCart(updatedCart);
     } catch (err) {
-      setError(err);
+      console.error(err);
     }
   }
 
@@ -45,32 +50,33 @@ export default function ShoppingCart(): ReactElement {
     quantity: number
   ) {
     try {
+      const updatedCart = cart.map((product) =>
+        product.productId === +productId
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      );
       await updateQuantity(
         shoppingCartId,
-        productId,
+        +productId,
         quantity - 1,
         token as string
       );
+      setCart(updatedCart);
     } catch (err) {
-      setError(err);
+      console.error(err);
     }
   }
 
   async function handleRemoveItem(shoppingCartId: number, productId: number) {
     try {
+      const updatedCart = cart.filter(
+        (product) => product.productId !== +productId
+      );
       await removeItem(shoppingCartId, productId, token as string);
+      setCart(updatedCart);
     } catch (err) {
-      setError(err);
+      console.error(err);
     }
-  }
-
-  if (error) {
-    return (
-      <div>
-        Error Loading Cart:{' '}
-        {error instanceof Error ? error.message : 'Unknown Error'}
-      </div>
-    );
   }
 
   return (
@@ -113,7 +119,8 @@ export default function ShoppingCart(): ReactElement {
                           </div>
 
                           <div className="ml-4 flow-root flex-shrink-0">
-                            <p
+                            <button
+                              type="button"
                               onClick={() =>
                                 user?.shoppingCartId &&
                                 handleRemoveItem(
@@ -123,7 +130,7 @@ export default function ShoppingCart(): ReactElement {
                               }
                               className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500">
                               <span>Remove</span>
-                            </p>
+                            </button>
                           </div>
                         </div>
 
@@ -140,10 +147,11 @@ export default function ShoppingCart(): ReactElement {
                               <nav
                                 className="isolate inline-flex -space-x-px rounded-md shadow-sm"
                                 aria-label="Pagination">
-                                <p
+                                <button
+                                  type="button"
                                   onClick={() =>
                                     user?.shoppingCartId &&
-                                    incrementQuantity(
+                                    decrementQuantity(
                                       user.shoppingCartId,
                                       product.productId,
                                       product.quantity
@@ -155,16 +163,17 @@ export default function ShoppingCart(): ReactElement {
                                     className="h-5 w-5"
                                     aria-hidden="true"
                                   />
-                                </p>
+                                </button>
                                 <p
                                   aria-current="page"
                                   className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
                                   {product.quantity}
                                 </p>
-                                <p
+                                <button
+                                  type="button"
                                   onClick={() =>
                                     user?.shoppingCartId &&
-                                    decrementQuantity(
+                                    incrementQuantity(
                                       user.shoppingCartId,
                                       product.productId,
                                       product.quantity
@@ -176,7 +185,7 @@ export default function ShoppingCart(): ReactElement {
                                     className="h-5 w-5"
                                     aria-hidden="true"
                                   />
-                                </p>
+                                </button>
                               </nav>
                             </div>
                           </div>
@@ -191,7 +200,8 @@ export default function ShoppingCart(): ReactElement {
                     <dd className="text-base font-medium text-gray-900">
                       {toDollars(
                         cart.reduce(
-                          (acc, product) => acc + Number(product.price),
+                          (acc, product) =>
+                            acc + product.price * product.quantity,
                           0
                         )
                       )}

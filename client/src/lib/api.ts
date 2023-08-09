@@ -123,9 +123,8 @@ export async function removeItem(
     },
     body: JSON.stringify({ shoppingCartId, productId }),
   };
-  const res = await fetch(`/api/delete/:cartId/:productId`, req);
+  const res = await fetch(`/api/delete/${shoppingCartId}/${productId}`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
-  return await res.json();
 }
 
 /**

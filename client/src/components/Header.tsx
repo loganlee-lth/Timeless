@@ -84,6 +84,7 @@ export default function Header(): ReactElement {
                   {user && (
                     <div className="flow-root">
                       <Link
+                        reloadDocument
                         to="/"
                         onClick={handleSignOut}
                         className="-m-2 block p-2 font-medium text-gray-900">
@@ -125,6 +126,7 @@ export default function Header(): ReactElement {
               {user && (
                 <div className="flex items-center space-x-6">
                   <Link
+                    reloadDocument
                     to="/"
                     onClick={handleSignOut}
                     className="text-sm font-medium text-white hover:text-gray-100">
@@ -221,7 +223,7 @@ export default function Header(): ReactElement {
                       {/* Cart */}
                       <div className="ml-4 flow-root lg:ml-8">
                         <Link
-                          to="/cart"
+                          to={`/cart/${user?.userId}`}
                           className="group -m-2 flex items-center p-2">
                           <ShoppingBagIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"

@@ -68,7 +68,7 @@ function App() {
             <Route path="sign-up" element={<AuthPage action="sign-up" />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/details/:productId" element={<ProductDetails />} />
-            <Route path="/cart" element={<ShoppingCart />} />
+            <Route path="/cart/:userId" element={<ShoppingCart />} />
           </Route>
         </Routes>
       </ShoppingCartContext.Provider>

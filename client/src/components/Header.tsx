@@ -1,6 +1,7 @@
 import { Fragment, ReactElement, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import ShoppingCartContext from '../context/ShoppingCartContext';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -19,17 +20,17 @@ type Navigation = {
 };
 
 const navigation: Navigation = {
-  pages: [
-    { name: 'Ready to Wear', to: '/catalog' },
-    { name: 'Shoes', to: '/' },
-    { name: 'Accessories', to: '/' },
-  ],
+  pages: [{ name: 'Products', to: '/catalog' }],
 };
 
 export default function Header(): ReactElement {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { user, handleSignOut } = useContext(AppContext);
-  console.log(user);
+  const { cart } = useContext(ShoppingCartContext);
+  const totalQuantity = cart.reduce(
+    (acc, product) => acc + product.quantity,
+    0
+  );
 
   return (
     <div className="bg-white sticky top-0 left-0 z-10 w-full opacity-95">
@@ -227,7 +228,7 @@ export default function Header(): ReactElement {
                             aria-hidden="true"
                           />
                           <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                            0
+                            {totalQuantity}
                           </span>
                           <span className="sr-only">Items in cart</span>
                         </Link>

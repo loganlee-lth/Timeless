@@ -1,7 +1,8 @@
 import { Fragment, ReactElement, useState, useEffect } from 'react';
 import { fetchCatalog, Product } from '../lib';
-import { Dialog, Transition } from '@headlessui/react';
 import ProductCard from '../components/ProductCard';
+import { Dialog, Transition } from '@headlessui/react';
+import Loading from '../components/Loading';
 
 const subCategories = [{ name: 'Polos' }, { name: 'Trousers' }];
 
@@ -26,7 +27,7 @@ export default function Catalog(): ReactElement {
     loadCatalog();
   }, []);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <Loading />;
   if (error)
     return (
       <div>

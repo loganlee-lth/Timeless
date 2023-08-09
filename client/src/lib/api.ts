@@ -13,11 +13,18 @@ export type Product = {
 export type User = {
   userId: number;
   username: string;
+  shoppingCartId: number;
 };
 
 export type Auth = {
   user: User;
   token: string;
+};
+
+export type ShoppingCartItem = {
+  productId: number;
+  quantity: number;
+  price: number;
 };
 
 /**
@@ -37,6 +44,86 @@ export async function fetchCatalog(): Promise<Product[]> {
  */
 export async function fetchProduct(productId: number): Promise<Product> {
   const res = await fetch(`/api/product/${productId}`);
+  if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+  return await res.json();
+}
+
+/**
+ * Fetch Cart.
+ */
+export async function fetchCart(userId: number, token: string) {
+  const req = {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+  };
+  const res = await fetch(`/api/cart/${userId}`, req);
+  if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+  return await res.json();
+}
+
+/**
+ * Add to Cart.
+ */
+export async function addToCart(
+  shoppingCartId: number,
+  productId: number,
+  quantity: number,
+  token: string
+) {
+  const req = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ shoppingCartId, productId, quantity }),
+  };
+  const res = await fetch(`/api/cart/${shoppingCartId}`, req);
+  return await res.json();
+}
+
+/**
+ * Update Cart.
+ */
+export async function updateQuantity(
+  shoppingCartId: number,
+  productId: number,
+  quantity: number,
+  token: string
+) {
+  const req = {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ shoppingCartId, productId, quantity }),
+  };
+  const res = await fetch(`/api/cart/${shoppingCartId}`, req);
+  if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+  return await res.json();
+}
+
+/**
+ * Remove from Cart.
+ */
+export async function removeItem(
+  shoppingCartId: number,
+  productId: number,
+  token: string
+) {
+  const req = {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ shoppingCartId, productId }),
+  };
+  const res = await fetch(`/api/delete/:cartId/:productId`, req);
   if (!res.ok) throw new Error(`fetch Error ${res.status}`);
   return await res.json();
 }
@@ -75,6 +162,7 @@ async function signUpOrIn(
   username: string,
   password: string
 ): Promise<User>;
+
 async function signUpOrIn(
   action: 'sign-in',
   username: string,

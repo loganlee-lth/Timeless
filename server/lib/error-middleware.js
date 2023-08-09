@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import ClientError from './client-error.js';
+import { ClientError } from './client-error.js';
 
-export default function errorMiddleware(err, req, res, next) {
+export function errorMiddleware(err, req, res, next) {
   if (err instanceof ClientError) {
     res.status(err.status).json({ error: err.message });
   } else if (err instanceof jwt.JsonWebTokenError) {

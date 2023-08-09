@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { ReactElement, useState, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Auth, signIn, signUp } from '../lib';
 
@@ -7,7 +7,10 @@ type AuthFormProps = {
   onSignIn: (auth: Auth) => void;
 };
 
-export default function AuthForm({ action, onSignIn }: AuthFormProps) {
+export default function AuthForm({
+  action,
+  onSignIn,
+}: AuthFormProps): ReactElement {
   const navigate = useNavigate();
   const [error, setError] = useState<unknown>();
 

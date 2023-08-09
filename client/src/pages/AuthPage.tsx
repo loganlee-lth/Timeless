@@ -1,7 +1,7 @@
-import { useContext, useEffect, ReactElement } from 'react';
+import { ReactElement, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../context/AppContext';
 import AuthForm from '../components/AuthForm';
+import AppContext from '../context/AppContext';
 
 type AuthPageProps = {
   action: 'sign-up' | 'sign-in';

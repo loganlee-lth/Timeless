@@ -1,10 +1,31 @@
 import 'dotenv/config';
 import express from 'express';
-import ClientError from './lib/client-error.js';
-import errorMiddleware from './lib/error-middleware.js';
+import {
+  authorizationMiddleware,
+  ClientError,
+  errorMiddleware,
+} from './lib/index.js';
 import pg from 'pg';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+
+type User = {
+  userId: number;
+  username: string;
+  hashedPassword: string;
+  shoppingCartId: number;
+};
+
+type Auth = {
+  username: string;
+  password: string;
+};
+
+type CartItem = {
+  shoppingCartId: number;
+  productId: number;
+  quantity: number;
+};
 
 // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars -- Remove when used
 const db = new pg.Pool({
@@ -13,6 +34,9 @@ const db = new pg.Pool({
     rejectUnauthorized: false,
   },
 });
+
+const hashKey = process.env.TOKEN_SECRET;
+if (!hashKey) throw new Error('TOKEN_SECRET not found in .env');
 
 const app = express();
 
@@ -27,19 +51,26 @@ app.use(express.json());
 
 app.post('/api/auth/sign-up', async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.body as Partial<Auth>;
     if (!username || !password) {
       throw new ClientError(400, 'username and password are required fields');
     }
     const hashedPassword = await argon2.hash(password);
-    const sql = `
+    const sqlUser = `
       insert into "user" ("username", "hashedPassword")
         values ($1, $2)
-        returning "userId", "username", "createdAt"
+        returning *;
     `;
     const params = [username, hashedPassword];
-    const result = await db.query(sql, params);
+    const result = await db.query<User>(sqlUser, params);
     const [user] = result.rows;
+    const sqlShoppingCart = `
+      insert into "shoppingCart" ("userId")
+        values ($1)
+        returning *;
+    `;
+    const paramsShoppingCart = [user.userId];
+    await db.query(sqlShoppingCart, paramsShoppingCart);
     res.status(201).json(user);
   } catch (err) {
     next(err);
@@ -48,29 +79,31 @@ app.post('/api/auth/sign-up', async (req, res, next) => {
 
 app.post('/api/auth/sign-in', async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.body as Partial<Auth>;
     if (!username || !password) {
       throw new ClientError(401, 'invalid login');
     }
     const sql = `
       select "userId",
-            "hashedPassword"
+            "hashedPassword",
+            "shoppingCartId"
         from "user"
-        where "username" = $1
+        join "shoppingCart" using ("userId")
+        where "username" = $1;
     `;
     const params = [username];
-    const result = await db.query(sql, params);
+    const result = await db.query<User>(sql, params);
     const [user] = result.rows;
     if (!user) {
       throw new ClientError(401, 'invalid login');
     }
-    const { userId, hashedPassword } = user;
+    const { userId, hashedPassword, shoppingCartId } = user;
     const isMatching = await argon2.verify(hashedPassword, password);
     if (!isMatching) {
       throw new ClientError(401, 'invalid login');
     }
-    const payload = { userId, username };
-    const token = jwt.sign(payload, process.env.TOKEN_SECRET as string);
+    const payload = { userId, username, shoppingCartId };
+    const token = jwt.sign(payload, hashKey);
     res.json({ token, user: payload });
   } catch (err) {
     next(err);
@@ -81,10 +114,10 @@ app.get('/api/product', async (req, res, next) => {
   try {
     const sql = `
       select *
-        from "product"
+        from "product";
     `;
     const result = await db.query(sql);
-    res.json(result.rows);
+    res.status(201).json(result.rows);
   } catch (err) {
     next(err);
   }
@@ -99,7 +132,7 @@ app.get('/api/product/:productId', async (req, res, next) => {
     const sql = `
       select *
         from "product"
-        where "productId" = $1
+        where "productId" = $1;
     `;
     const params = [productId];
     const result = await db.query(sql, params);
@@ -109,11 +142,103 @@ app.get('/api/product/:productId', async (req, res, next) => {
         `cannot find product with productId ${productId}`
       );
     }
-    res.json(result.rows[0]);
+    res.status(201).json(result.rows[0]);
   } catch (err) {
     next(err);
   }
 });
+
+app.get(
+  '/api/cart/:userId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    const userId = req.params.userId;
+    try {
+      const sql = `
+      select *
+        from "user"
+        join "shoppingCart" using ("userId")
+        join "shoppingCartItems" using ("shoppingCartId")
+        join "product" using ("productId")
+        where "user"."userId" = $1
+   `;
+      const params = [userId];
+      const result = await db.query(sql, params);
+      res.status(200).json(result.rows);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+app.post(
+  '/api/cart/:cartId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    try {
+      const { shoppingCartId, productId, quantity } =
+        req.body as Partial<CartItem>;
+      if (!shoppingCartId || !productId || !quantity) {
+        throw new ClientError(
+          400,
+          'userId, productId, and quantity are required fields'
+        );
+      }
+      const sql = `
+      insert into "shoppingCartItems" ("shoppingCartId", "productId", "quantity")
+        values ($1, $2, $3)
+        returning *;
+    `;
+      const params = [shoppingCartId, productId, quantity];
+      const result = await db.query(sql, params);
+      const [cart] = result.rows;
+      res.status(201).json(cart);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+app.put(
+  '/api/cart/:cartId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    try {
+      const { shoppingCartId, productId, quantity } = req.body;
+      if (!quantity) throw new ClientError(400, 'quantity is required');
+      const sql = `
+      update "shoppingCartItems"
+        set "quantity" = $3
+        where "shoppingCartId" = $1 and "productId" = $2
+        returning *;
+    `;
+      const params = [shoppingCartId, productId, quantity];
+      const result = await db.query(sql, params);
+      res.status(200).json(result.rows);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+app.delete(
+  '/api/delete/:cartId/:productId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    try {
+      const { shoppingCartId, productId } = req.body;
+      const sql = `
+      delete from "shoppingCartItems"
+        where "shoppingCartId" = $1 and "productId" = $2
+    `;
+      const params = [shoppingCartId, productId];
+      await db.query(sql, params);
+      res.sendStatus(204);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 /**
  * Serves React's index.html if no api route matches.

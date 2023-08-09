@@ -1,6 +1,7 @@
 import { Fragment, ReactElement, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../context/AppContext';
+import ShoppingCartContext from '../context/ShoppingCartContext';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
@@ -19,17 +20,17 @@ type Navigation = {
 };
 
 const navigation: Navigation = {
-  pages: [
-    { name: 'Ready to Wear', to: '/catalog' },
-    { name: 'Shoes', to: '/' },
-    { name: 'Accessories', to: '/' },
-  ],
+  pages: [{ name: 'Products', to: '/catalog' }],
 };
 
 export default function Header(): ReactElement {
   const [isOpen, setOpen] = useState<boolean>(false);
   const { user, handleSignOut } = useContext(AppContext);
-  console.log(user);
+  const { cart } = useContext(ShoppingCartContext);
+  const totalQuantity = cart.reduce(
+    (acc, product) => acc + product.quantity,
+    0
+  );
 
   return (
     <div className="bg-white sticky top-0 left-0 z-10 w-full opacity-95">
@@ -83,6 +84,7 @@ export default function Header(): ReactElement {
                   {user && (
                     <div className="flow-root">
                       <Link
+                        reloadDocument
                         to="/"
                         onClick={handleSignOut}
                         className="-m-2 block p-2 font-medium text-gray-900">
@@ -124,6 +126,7 @@ export default function Header(): ReactElement {
               {user && (
                 <div className="flex items-center space-x-6">
                   <Link
+                    reloadDocument
                     to="/"
                     onClick={handleSignOut}
                     className="text-sm font-medium text-white hover:text-gray-100">
@@ -220,14 +223,14 @@ export default function Header(): ReactElement {
                       {/* Cart */}
                       <div className="ml-4 flow-root lg:ml-8">
                         <Link
-                          to="/cart"
+                          to={`/cart/${user?.userId}`}
                           className="group -m-2 flex items-center p-2">
                           <ShoppingBagIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                             aria-hidden="true"
                           />
                           <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                            0
+                            {totalQuantity}
                           </span>
                           <span className="sr-only">Items in cart</span>
                         </Link>

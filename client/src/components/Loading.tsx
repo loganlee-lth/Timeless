@@ -2,7 +2,9 @@ import { ReactElement } from 'react';
 
 export default function Loading(): ReactElement {
   return (
-    <div className="flex justify-center items-center" role="status">
+    <div
+      className="flex justify-center items-center mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+      role="status">
       <svg
         aria-hidden="true"
         className="w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"

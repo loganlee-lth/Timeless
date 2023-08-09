@@ -12,14 +12,10 @@ type FooterNavigation = {
 };
 
 const footerNavigation: FooterNavigation = {
-  shop: [
-    { name: 'Ready to Wear', to: '/' },
-    { name: 'Shoes', to: '/' },
-    { name: 'Accessories', to: '/' },
-  ],
+  shop: [{ name: 'Products', to: '/' }],
   connect: [
-    { name: 'GitHub', to: '/' },
-    { name: 'LinkedIn', to: '/' },
+    { name: 'GitHub', to: 'https://github.com/loganlee-lth' },
+    { name: 'LinkedIn', to: 'https://www.linkedin.com/in/logan-lee-lth/' },
   ],
 };
 

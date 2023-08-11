@@ -50,13 +50,13 @@ export default function Home(): ReactElement {
 
         <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 py-32 text-center sm:py-64 lg:px-0">
           <h1 className="text-4xl font-bold tracking-tight text-white lg:text-6xl">
-            Text
+            Timeless
           </h1>
           <p className="mt-4 text-xl text-white">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum modi
-            molestias necessitatibus iste ex a, est voluptatum doloremque
-            nostrum consequuntur voluptate porro asperiores, dolor libero, eius
-            fugit ratione repellendus similique.
+            Timeless was built on this heritage of know-how and product-centric
+            passion, and promotes a durable fashion concept, featuring inner and
+            outer qualities that make it immune to the passing of time and
+            fleeting trends.
           </p>
         </div>
       </div>
@@ -72,12 +72,9 @@ export default function Home(): ReactElement {
             Shop by Collection
           </h2>
           <p className="mt-4 text-base text-gray-500">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quas
-            doloremque natus at repellat excepturi perferendis. Pariatur,
-            voluptatibus? Magni velit maiores iste debitis labore adipisci eos
-            perferendis quo dolores illum.
+            Each season, we collaborate with world-class designers to create a
+            collection inspired by the natural world.
           </p>
-
           <div className="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
             {products?.slice(0, 3).map((product, index) => (
               <Link key={index} className="group block" to="/">
@@ -118,13 +115,13 @@ export default function Home(): ReactElement {
                 <h2
                   id="comfort-heading"
                   className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Placeholder
+                  About Timeless
                 </h2>
                 <p className="mt-3 text-xl text-white">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum
-                  modi molestias necessitatibus iste ex a, est voluptatum
-                  doloremque nostrum consequuntur voluptate porro asperiores,
-                  dolor libero, eius fugit ratione repellendus similique.
+                  Pioneering the “durable fashion” concept, Timeless now
+                  operates more than 30 outlets in the world's major shopping
+                  capitals, including Milan, London, Paris, New York and Tokyo,
+                  as well as international department stores.
                 </p>
               </div>
             </div>

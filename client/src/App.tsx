@@ -8,6 +8,7 @@ import ProductDetails from './pages/ProductDetails';
 import ShoppingCart from './pages/ShoppingCart';
 import Success from './pages/Success';
 import Fail from './pages/Fail';
+import NotFound from './pages/NotFound';
 import { Auth, User, ShoppingCartItem, fetchCart } from './lib';
 import AppContext from './context/AppContext';
 import ShoppingCartContext from './context/ShoppingCartContext';
@@ -73,6 +74,7 @@ function App() {
             <Route path="/cart/:userId" element={<ShoppingCart />} />
             <Route path="/checkout/success" element={<Success />} />
             <Route path="/checkout/fail" element={<Fail />} />
+            <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
       </ShoppingCartContext.Provider>

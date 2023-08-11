@@ -12,7 +12,7 @@ type FooterNavigation = {
 };
 
 const footerNavigation: FooterNavigation = {
-  shop: [{ name: 'Products', to: '/' }],
+  shop: [{ name: 'Products', to: '/catalog' }],
   connect: [
     { name: 'GitHub', to: 'https://github.com/loganlee-lth' },
     { name: 'LinkedIn', to: 'https://www.linkedin.com/in/logan-lee-lth/' },
@@ -53,6 +53,8 @@ export default function Footer(): ReactElement {
                       <li key={item.name} className="text-sm">
                         <Link
                           to={item.to}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-gray-300 hover:text-white">
                           {item.name}
                         </Link>

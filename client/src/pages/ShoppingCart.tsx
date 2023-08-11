@@ -1,6 +1,12 @@
-import { ReactElement, useEffect, useContext } from 'react';
+import React, { ReactElement, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { fetchCart, toDollars, removeItem, updateQuantity } from '../lib';
+import {
+  fetchCart,
+  toDollars,
+  removeItem,
+  updateQuantity,
+  checkout,
+} from '../lib';
 import AppContext from '../context/AppContext';
 import ShoppingCartContext from '../context/ShoppingCartContext';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
@@ -79,6 +85,16 @@ export default function ShoppingCart(): ReactElement {
     }
   }
 
+  async function handleCheckout(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const url = await checkout(cart, token as string);
+      window.location.href = url;
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
       <div className="bg-white">
@@ -86,7 +102,7 @@ export default function ShoppingCart(): ReactElement {
           <h1 className="text-center text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Shopping Cart
           </h1>
-          <form className="mt-12">
+          <form onSubmit={handleCheckout} className="mt-12">
             <div className="mt-10 lg:mt-0">
               <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                 <h3 className="sr-only">Items in your cart</h3>

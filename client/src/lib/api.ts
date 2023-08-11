@@ -128,6 +128,22 @@ export async function removeItem(
 }
 
 /**
+ * Cart checkout.
+ */
+export async function checkout(cart: ShoppingCartItem[], token: string) {
+  const req = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ cart: cart }),
+  };
+  const res = await fetch('/api/checkout', req);
+  return await res.json();
+}
+
+/**
  * Signs in a user.
  * @param {string} username The user's username.
  * @param {sting} password The user's password.

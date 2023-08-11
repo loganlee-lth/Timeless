@@ -251,6 +251,27 @@ app.delete(
   }
 );
 
+// clears every item from cart
+app.delete(
+  '/api/delete/:cartId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    try {
+      const { shoppingCartId } = req.body;
+      const sql = `
+    delete
+      from "shoppingCartItems"
+      where "shoppingCartId" = $1
+    `;
+      const params = [shoppingCartId];
+      await db.query(sql, params);
+      res.sendStatus(204);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 app.post('/api/checkout', authorizationMiddleware, async (req, res, next) => {
   const { cart } = req.body;
   try {

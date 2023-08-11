@@ -6,6 +6,7 @@ import {
   removeItem,
   updateQuantity,
   checkout,
+  removeAllItems,
 } from '../lib';
 import AppContext from '../context/AppContext';
 import ShoppingCartContext from '../context/ShoppingCartContext';
@@ -90,6 +91,7 @@ export default function ShoppingCart(): ReactElement {
     try {
       const url = await checkout(cart, token as string);
       window.location.href = url;
+      await removeAllItems(user!.shoppingCartId, token as string);
     } catch (err) {
       console.error(err);
     }

@@ -18,6 +18,7 @@ CREATE TABLE "public"."user" (
 
 CREATE TABLE "public"."product" (
 	"productId" serial NOT NULL,
+	"priceId" TEXT NOT NULL,
 	"name" TEXT NOT NULL,
 	"shortDescription" TEXT NOT NULL,
 	"longDescription" TEXT NOT NULL,

@@ -115,7 +115,7 @@ export default function ProductDetails(): ReactElement {
               <h3 className="sr-only">Description</h3>
               <div
                 className="space-y-6 text-base text-gray-700"
-                dangerouslySetInnerHTML={{ __html: product.shortDescription }}
+                dangerouslySetInnerHTML={{ __html: product.longDescription }}
               />
             </div>
             <form className="mt-6">
@@ -124,7 +124,7 @@ export default function ProductDetails(): ReactElement {
                   type="button"
                   onClick={handleAddToCart}
                   className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full">
-                  Add to bag
+                  Add to cart
                 </button>
               </div>
             </form>

@@ -8,6 +8,12 @@ import {
 import pg from 'pg';
 import argon2 from 'argon2';
 import jwt from 'jsonwebtoken';
+import { Stripe } from 'stripe';
+
+const stripe = new Stripe(process.env.STRIPE_API_KEY!, {
+  apiVersion: '2022-11-15',
+  typescript: true,
+});
 
 type User = {
   userId: number;
@@ -24,6 +30,11 @@ type Auth = {
 type CartItem = {
   shoppingCartId: number;
   productId: number;
+  quantity: number;
+};
+
+type checkoutCart = {
+  priceId: string;
   quantity: number;
 };
 
@@ -239,6 +250,45 @@ app.delete(
     }
   }
 );
+
+app.delete(
+  '/api/delete/:cartId',
+  authorizationMiddleware,
+  async (req, res, next) => {
+    try {
+      const { shoppingCartId } = req.body;
+      const sql = `
+    delete
+      from "shoppingCartItems"
+      where "shoppingCartId" = $1
+    `;
+      const params = [shoppingCartId];
+      await db.query(sql, params);
+      res.sendStatus(204);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
+app.post('/api/checkout', authorizationMiddleware, async (req, res, next) => {
+  const { cart } = req.body;
+  try {
+    const session = await stripe.checkout.sessions.create({
+      line_items: cart.map((product: checkoutCart) => ({
+        price: product.priceId,
+        quantity: product.quantity,
+      })),
+      mode: 'payment',
+      success_url: `http://localhost:3000/checkout/success`,
+      cancel_url: `http://localhost:3000/checkout/fail`,
+      automatic_tax: { enabled: true },
+    });
+    res.status(303).json(session.url);
+  } catch (err) {
+    next(err);
+  }
+});
 
 /**
  * Serves React's index.html if no api route matches.

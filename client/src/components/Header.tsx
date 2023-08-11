@@ -5,7 +5,6 @@ import ShoppingCartContext from '../context/ShoppingCartContext';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
-  MagnifyingGlassIcon,
   ShoppingBagIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -193,17 +192,6 @@ export default function Header(): ReactElement {
                       <span className="sr-only">Open menu</span>
                       <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
-
-                    {/* Search */}
-                    <Link
-                      to="/"
-                      className="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                      <span className="sr-only">Search</span>
-                      <MagnifyingGlassIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                    </Link>
                   </div>
 
                   {/* Logo (lg-) */}
@@ -214,16 +202,10 @@ export default function Header(): ReactElement {
 
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
-                      <Link
-                        to="/"
-                        className="hidden text-sm font-medium text-gray-700 hover:text-gray-800 lg:block">
-                        Search
-                      </Link>
-
                       {/* Cart */}
                       <div className="ml-4 flow-root lg:ml-8">
                         <Link
-                          to={`/cart/${user?.userId}`}
+                          to={!user ? '/sign-in' : `/cart/${user?.userId}`}
                           className="group -m-2 flex items-center p-2">
                           <ShoppingBagIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"

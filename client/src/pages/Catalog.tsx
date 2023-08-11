@@ -4,11 +4,16 @@ import ProductCard from '../components/ProductCard';
 import { Dialog, Transition } from '@headlessui/react';
 import Loading from '../components/Loading';
 
-const subCategories = [{ name: 'Polos' }, { name: 'Trousers' }];
+const subCategories = [
+  { name: 'All' },
+  { name: 'Polos' },
+  { name: 'Trousers' },
+];
 
 export default function Catalog(): ReactElement {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [products, setProducts] = useState<Product[]>();
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown>();
 
@@ -17,6 +22,7 @@ export default function Catalog(): ReactElement {
       try {
         const products = await fetchCatalog();
         setProducts(products);
+        setDisplayedProducts(products);
       } catch (err) {
         setError(err);
       } finally {
@@ -35,6 +41,18 @@ export default function Catalog(): ReactElement {
         {error instanceof Error ? error.message : 'Unknown Error'}
       </div>
     );
+
+  function handleFilter(category: string) {
+    if (category === 'All') {
+      setDisplayedProducts(products);
+    } else {
+      setDisplayedProducts(products);
+      const filteredProducts = products?.filter(
+        (product) => product.category === category.toLowerCase()
+      );
+      setDisplayedProducts(filteredProducts);
+    }
+  }
 
   return (
     <div className="bg-white">
@@ -84,7 +102,7 @@ export default function Catalog(): ReactElement {
         </Transition.Root>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-10">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               Men's Clothing
             </h1>
@@ -100,13 +118,17 @@ export default function Catalog(): ReactElement {
                 <ul className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
-                      <p>{category.name}</p>
+                      <button
+                        type="button"
+                        onClick={() => handleFilter(category.name)}>
+                        {category.name}
+                      </button>
                     </li>
                   ))}
                 </ul>
               </form>
               {/* Product grid */}
-              <ProductCard products={products} />
+              <ProductCard products={displayedProducts} />
             </div>
           </section>
         </main>

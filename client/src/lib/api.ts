@@ -128,6 +128,38 @@ export async function removeItem(
 }
 
 /**
+ * Remove all products from Cart.
+ */
+export async function removeAllItems(shoppingCartId: number, token: string) {
+  const req = {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ shoppingCartId }),
+  };
+  const res = await fetch(`/api/delete/${shoppingCartId}`, req);
+  if (!res.ok) throw new Error(`fetch Error ${res.status}`);
+}
+
+/**
+ * Cart checkout.
+ */
+export async function checkout(cart: ShoppingCartItem[], token: string) {
+  const req = {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ cart: cart }),
+  };
+  const res = await fetch('/api/checkout', req);
+  return await res.json();
+}
+
+/**
  * Signs in a user.
  * @param {string} username The user's username.
  * @param {sting} password The user's password.

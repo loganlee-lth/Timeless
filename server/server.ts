@@ -251,7 +251,6 @@ app.delete(
   }
 );
 
-// clears every item from cart
 app.delete(
   '/api/delete/:cartId',
   authorizationMiddleware,

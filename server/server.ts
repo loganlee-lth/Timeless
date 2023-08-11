@@ -280,8 +280,8 @@ app.post('/api/checkout', authorizationMiddleware, async (req, res, next) => {
         quantity: product.quantity,
       })),
       mode: 'payment',
-      success_url: `http://localhost:3000/checkout/success`,
-      cancel_url: `http://localhost:3000/checkout/fail`,
+      success_url: `https://timeless.loganleelth.com/success`,
+      cancel_url: `https://timeless.loganleelth.com/fail`,
       automatic_tax: { enabled: true },
     });
     res.status(303).json(session.url);

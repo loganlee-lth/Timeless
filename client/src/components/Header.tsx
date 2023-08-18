@@ -154,7 +154,7 @@ export default function Header(): ReactElement {
                       <span className="sr-only">Timeless Fashion</span>
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                        src="/images/timelessLogo.png"
                         alt=""
                       />
                     </Link>
@@ -202,7 +202,7 @@ export default function Header(): ReactElement {
                   <Link to="/" className="lg:hidden">
                     <span className="sr-only">Timeless Fashion</span>
                     <img
-                      src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                      src="/images/timelessLogo.png"
                       alt=""
                       className="h-8 w-auto"
                     />

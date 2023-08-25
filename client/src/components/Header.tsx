@@ -33,7 +33,7 @@ export default function Header(): ReactElement {
   );
 
   return (
-    <div className="bg-white">
+    <div className="bg-timeless1">
       {/* Mobile menu */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
@@ -46,7 +46,7 @@ export default function Header(): ReactElement {
               leave="transition ease-in-out duration-300 transform"
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full">
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-timeless1 pb-12 shadow-xl">
                 <div className="flex px-4 pb-2 pt-5">
                   <button
                     type="button"
@@ -112,7 +112,7 @@ export default function Header(): ReactElement {
       <header className="relative">
         <nav aria-label="Top">
           {/* Top navigation */}
-          <div className="bg-gray-900">
+          <div className="bg-timeless2">
             <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
               <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                 {user && (
@@ -144,7 +144,7 @@ export default function Header(): ReactElement {
           </div>
 
           {/* Secondary navigation */}
-          <div className="bg-white">
+          <div className="bg-timeless1">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="border-b border-gray-200">
                 <div className="flex h-16 items-center justify-between">
@@ -180,7 +180,7 @@ export default function Header(): ReactElement {
                   <div className="flex flex-1 items-center lg:hidden">
                     <button
                       type="button"
-                      className="rounded-md bg-white p-2 text-gray-400"
+                      className="rounded-md bg-timeless1 p-2 text-gray-400"
                       onClick={() => setOpen(true)}>
                       <span className="sr-only">Open menu</span>
                       <Bars3Icon className="h-6 w-6" aria-hidden="true" />

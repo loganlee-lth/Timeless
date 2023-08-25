@@ -52,12 +52,12 @@ const footerNavigation: FooterNavigation = {
 
 export default function Footer(): ReactElement {
   return (
-    <footer aria-labelledby="footer-heading" className="relative">
+    <footer aria-labelledby="footer-heading" className="relative bg-timeless2">
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-4 lg:px-8">
-        <div className="border-t border-white/10 pt-8 md:flex md:items-center md:justify-between">
+        <div className="border-white/10 pt-8 md:flex md:items-center md:justify-between">
           <div className="flex space-x-6 md:order-2">
             {footerNavigation.social.map((item) => (
               <Link

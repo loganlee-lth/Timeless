@@ -3,7 +3,7 @@ import { ReactElement } from 'react';
 export default function Loading(): ReactElement {
   return (
     <div
-      className="flex justify-center items-center mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+      className="flex justify-center items-center mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 bg-timeless1"
       role="status">
       <svg
         aria-hidden="true"

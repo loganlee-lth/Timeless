@@ -32,7 +32,7 @@ export default function Home(): ReactElement {
       </div>
     );
   return (
-    <div className="bg-custom-white">
+    <div className="bg-timeless1">
       {/* Hero section */}
       <div className="relative bg-gray-900">
         {/* Decorative image and overlay */}
@@ -61,7 +61,7 @@ export default function Home(): ReactElement {
         </div>
       </div>
 
-      <main>
+      <main className="bg-timeless1">
         {/* Collection section */}
         <section
           aria-labelledby="collection-heading"

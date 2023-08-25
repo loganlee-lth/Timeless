@@ -110,7 +110,7 @@ export default function Catalog(): ReactElement {
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-timeless1">
       <main className="pb-24">
         <div className="px-4 py-16 text-center sm:px-6 lg:px-8">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">

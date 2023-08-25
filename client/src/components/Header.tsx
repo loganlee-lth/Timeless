@@ -185,17 +185,6 @@ export default function Header(): ReactElement {
                       <span className="sr-only">Open menu</span>
                       <Bars3Icon className="h-6 w-6" aria-hidden="true" />
                     </button>
-
-                    {/* Search */}
-                    <Link
-                      to="#"
-                      className="ml-2 p-2 text-gray-400 hover:text-gray-500">
-                      <span className="sr-only">Search</span>
-                      <MagnifyingGlassIcon
-                        className="h-6 w-6"
-                        aria-hidden="true"
-                      />
-                    </Link>
                   </div>
 
                   {/* Logo (lg-) */}
@@ -210,25 +199,6 @@ export default function Header(): ReactElement {
 
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
-                      <div className="flex space-x-8">
-                        <div className="hidden lg:flex">
-                          <Link
-                            to="#"
-                            className="p-2 text-gray-400 hover:text-gray-500">
-                            <span className="sr-only">Search</span>
-                            <MagnifyingGlassIcon
-                              className="h-6 w-6"
-                              aria-hidden="true"
-                            />
-                          </Link>
-                        </div>
-                      </div>
-
-                      <span
-                        className="mx-4 h-6 w-px lg:bg-gray-200 lg:mx-6"
-                        aria-hidden="true"
-                      />
-
                       <div className="flow-root">
                         <Link
                           to={!user ? '/sign-in' : `/cart/${user?.userId}`}

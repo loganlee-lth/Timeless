@@ -19,8 +19,8 @@ const filters = {
 };
 
 const sortOptions = [
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
+  { name: 'Price: Low to High', value: 'asc', current: false },
+  { name: 'Price: High to Low', value: 'desc', current: false },
 ];
 
 function classNames(...classes: any[]) {
@@ -33,6 +33,7 @@ export default function Catalog(): ReactElement {
   const [error, setError] = useState<unknown>();
   const [selectedPrices, setSelectedPrices] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [sortOrder, setSortOrder] = useState<string>('');
 
   useEffect(() => {
     async function loadCatalog() {
@@ -108,6 +109,13 @@ export default function Catalog(): ReactElement {
     setSelectedPrices([]);
     setSelectedCategories([]);
   };
+
+  let sortedProducts = [...(filteredProducts || [])];
+  if (sortOrder === 'asc') {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  } else if (sortOrder === 'desc') {
+    sortedProducts.sort((a, b) => b.price - a.price);
+  }
 
   return (
     <div className="bg-timeless1">
@@ -235,8 +243,8 @@ export default function Catalog(): ReactElement {
                       {sortOptions.map((option) => (
                         <Menu.Item key={option.name}>
                           {({ active }) => (
-                            <a
-                              href={option.href}
+                            <button
+                              onClick={() => setSortOrder(option.value)}
                               className={classNames(
                                 option.current
                                   ? 'font-medium text-gray-900'
@@ -245,7 +253,7 @@ export default function Catalog(): ReactElement {
                                 'block px-4 py-2 text-sm'
                               )}>
                               {option.name}
-                            </a>
+                            </button>
                           )}
                         </Menu.Item>
                       ))}
@@ -256,7 +264,7 @@ export default function Catalog(): ReactElement {
             </div>
           </div>
         </Disclosure>
-        <ProductCard products={filteredProducts} />
+        <ProductCard products={sortedProducts} />
       </main>
     </div>
   );

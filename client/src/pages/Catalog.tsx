@@ -87,7 +87,7 @@ export default function Catalog(): ReactElement {
       selectedCategories.includes(product.category);
 
     // Filter by price
-    const priceMatch = selectedPrices.every((price) => {
+    const priceMatch = selectedPrices.some((price) => {
       switch (price) {
         case '0':
           return product.price <= 25;
@@ -98,11 +98,11 @@ export default function Catalog(): ReactElement {
         case '75':
           return product.price > 75;
         default:
-          return true;
+          return false;
       }
     });
 
-    return categoryMatch && priceMatch;
+    return categoryMatch && (selectedPrices.length === 0 || priceMatch);
   });
 
   const clearFilters = () => {

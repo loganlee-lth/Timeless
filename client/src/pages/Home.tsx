@@ -77,7 +77,10 @@ export default function Home(): ReactElement {
           </p>
           <div className="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
             {products?.slice(0, 3).map((product, index) => (
-              <Link key={index} className="group block" to="/">
+              <Link
+                key={index}
+                className="group block"
+                to={`/details/${product.productId}`}>
                 <div
                   aria-hidden="true"
                   className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg lg:aspect-h-6 lg:aspect-w-5 group-hover:opacity-75">

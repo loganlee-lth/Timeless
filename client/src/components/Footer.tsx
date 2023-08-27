@@ -21,7 +21,7 @@ const footerNavigation: FooterNavigation = {
     {
       name: 'LinkedIn',
       to: 'https://www.linkedin.com/in/logan-lee-lth/',
-      icon: (props: any) => (
+      icon: (props: IconProps) => (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -37,7 +37,7 @@ const footerNavigation: FooterNavigation = {
     {
       name: 'GitHub',
       to: 'https://github.com/loganlee-lth',
-      icon: (props: any) => (
+      icon: (props: IconProps) => (
         <svg fill="currentColor" viewBox="0 0 24 24" {...props}>
           <path
             fillRule="evenodd"

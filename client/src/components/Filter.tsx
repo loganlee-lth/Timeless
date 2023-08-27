@@ -5,7 +5,6 @@ import { FunnelIcon } from '@heroicons/react/20/solid';
 type FilterOption = {
   value: string;
   label: string;
-  checked: boolean;
 };
 
 type Filters = {
@@ -15,16 +14,16 @@ type Filters = {
 
 const filters: Filters = {
   price: [
-    { value: '0', label: '$0 - $20', checked: false },
-    { value: '2000', label: '$20 - $35', checked: false },
-    { value: '3500', label: '$35 - $55', checked: false },
-    { value: '5500', label: '$55+', checked: false },
+    { value: '0', label: '$0 - $20' },
+    { value: '2000', label: '$20 - $35' },
+    { value: '3500', label: '$35 - $55' },
+    { value: '5500', label: '$55+' },
   ],
   category: [
-    { value: 't-shirt', label: 'T-shirt', checked: false },
-    { value: 'polos', label: 'Polo shirt', checked: false },
-    { value: 'sweater', label: 'Sweater', checked: false },
-    { value: 'trousers', label: 'Trousers', checked: false },
+    { value: 't-shirt', label: 'T-shirt' },
+    { value: 'polos', label: 'Polo shirt' },
+    { value: 'sweater', label: 'Sweater' },
+    { value: 'trousers', label: 'Trousers' },
   ],
 };
 

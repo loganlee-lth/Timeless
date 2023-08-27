@@ -15,13 +15,15 @@ type Filters = {
 
 const filters: Filters = {
   price: [
-    { value: '0', label: '$0 - $25', checked: false },
-    { value: '2500', label: '$25 - $50', checked: false },
-    { value: '3000', label: '$50 - $75', checked: false },
-    { value: '7500', label: '$75+', checked: false },
+    { value: '0', label: '$0 - $20', checked: false },
+    { value: '2000', label: '$20 - $35', checked: false },
+    { value: '3500', label: '$35 - $55', checked: false },
+    { value: '5500', label: '$55+', checked: false },
   ],
   category: [
-    { value: 'polos', label: 'Polos', checked: false },
+    { value: 't-shirt', label: 'T-shirt', checked: false },
+    { value: 'polos', label: 'Polo shirt', checked: false },
+    { value: 'sweater', label: 'Sweater', checked: false },
     { value: 'trousers', label: 'Trousers', checked: false },
   ],
 };

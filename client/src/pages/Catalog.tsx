@@ -69,13 +69,13 @@ export default function Catalog(): ReactElement {
     const priceMatch = selectedPrices.some((price) => {
       switch (price) {
         case '0':
-          return product.price <= 25;
-        case '2500':
-          return product.price > 2500 && product.price <= 3000;
-        case '3000':
-          return product.price > 3000 && product.price <= 7500;
-        case '75':
-          return product.price > 75;
+          return product.price <= 2000;
+        case '2000':
+          return product.price > 2000 && product.price <= 3500;
+        case '3500':
+          return product.price > 3500 && product.price <= 5500;
+        case '5500':
+          return product.price > 5500;
         default:
           return false;
       }

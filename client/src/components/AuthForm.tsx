@@ -13,12 +13,12 @@ export default function AuthForm({
 }: AuthFormProps): ReactElement {
   const navigate = useNavigate();
   const [error, setError] = useState<unknown>();
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [demoUsername, setDemoUsername] = useState<string>('');
+  const [demoPassword, setDemoPassword] = useState<string>('');
 
   function handleDemoAccountClick() {
-    setUsername('demo');
-    setPassword('password');
+    setDemoUsername('demo');
+    setDemoPassword('timelessDEMOpassword');
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -41,8 +41,12 @@ export default function AuthForm({
     try {
       if (action === 'sign-up') {
         handleSignUp(username, password);
+        setDemoUsername('');
+        setDemoPassword('');
       } else {
         handleSignIn(username, password);
+        setDemoUsername('');
+        setDemoPassword('');
       }
     } catch (err) {
       setError(err);
@@ -73,8 +77,8 @@ export default function AuthForm({
               type="text"
               autoFocus
               required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={demoUsername}
+              onChange={(e) => setDemoUsername(e.target.value)}
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -94,8 +98,8 @@ export default function AuthForm({
               type="password"
               autoComplete="current-password"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={demoPassword}
+              onChange={(e) => setDemoPassword(e.target.value)}
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>

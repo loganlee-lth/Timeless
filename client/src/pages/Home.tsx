@@ -16,7 +16,9 @@ export default function Home(): ReactElement {
       } catch (err) {
         setError(err);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
       }
     }
     setIsLoading(true);
@@ -31,8 +33,9 @@ export default function Home(): ReactElement {
         {error instanceof Error ? error.message : 'Unknown Error'}
       </div>
     );
+
   return (
-    <div className="bg-custom-white">
+    <div className="bg-timeless1">
       {/* Hero section */}
       <div className="relative bg-gray-900">
         {/* Decorative image and overlay */}
@@ -61,7 +64,7 @@ export default function Home(): ReactElement {
         </div>
       </div>
 
-      <main>
+      <main className="bg-timeless1">
         {/* Collection section */}
         <section
           aria-labelledby="collection-heading"
@@ -77,7 +80,10 @@ export default function Home(): ReactElement {
           </p>
           <div className="mt-10 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-8 lg:space-y-0">
             {products?.slice(0, 3).map((product, index) => (
-              <Link key={index} className="group block" to="/">
+              <Link
+                key={index}
+                className="group block"
+                to={`/details/${product.productId}`}>
                 <div
                   aria-hidden="true"
                   className="aspect-h-2 aspect-w-3 overflow-hidden rounded-lg lg:aspect-h-6 lg:aspect-w-5 group-hover:opacity-75">

@@ -5,7 +5,7 @@ import ShoppingCartContext from '../context/ShoppingCartContext';
 import { Dialog, Popover, Transition } from '@headlessui/react';
 import {
   Bars3Icon,
-  ShoppingBagIcon,
+  ShoppingCartIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
@@ -32,21 +32,10 @@ export default function Header(): ReactElement {
   );
 
   return (
-    <div className="bg-white sticky top-0 left-0 z-10 w-full opacity-95">
+    <div className="bg-timeless1">
       {/* Mobile menu */}
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
-          <Transition.Child
-            as={Fragment}
-            enter="transition-opacity ease-linear duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="transition-opacity ease-linear duration-300"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0">
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
-
           <div className="fixed inset-0 z-40 flex">
             <Transition.Child
               as={Fragment}
@@ -56,7 +45,7 @@ export default function Header(): ReactElement {
               leave="transition ease-in-out duration-300 transform"
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full">
-              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-white pb-12 shadow-xl">
+              <Dialog.Panel className="relative flex w-full max-w-xs flex-col overflow-y-auto bg-timeless1 pb-12 shadow-xl">
                 <div className="flex px-4 pb-2 pt-5">
                   <button
                     type="button"
@@ -72,6 +61,7 @@ export default function Header(): ReactElement {
                     <div key={page.name} className="flow-root">
                       <Link
                         to={page.to}
+                        onClick={() => setOpen(false)}
                         className="-m-2 block p-2 font-medium text-gray-900">
                         {page.name}
                       </Link>
@@ -96,6 +86,7 @@ export default function Header(): ReactElement {
                       <div className="flow-root">
                         <Link
                           to="/sign-up"
+                          onClick={() => setOpen(false)}
                           className="-m-2 block p-2 font-medium text-gray-900">
                           Create an account
                         </Link>
@@ -103,6 +94,7 @@ export default function Header(): ReactElement {
                       <div className="flow-root">
                         <Link
                           to="/sign-in"
+                          onClick={() => setOpen(false)}
                           className="-m-2 block p-2 font-medium text-gray-900">
                           Sign in
                         </Link>
@@ -110,7 +102,6 @@ export default function Header(): ReactElement {
                     </>
                   )}
                 </div>
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6"></div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
@@ -120,10 +111,10 @@ export default function Header(): ReactElement {
       <header className="relative">
         <nav aria-label="Top">
           {/* Top navigation */}
-          <div className="bg-gray-900">
-            <div className="mx-auto flex h-10 max-w-7xl items-center justify-end px-4 sm:px-6 lg:px-8">
-              {user && (
-                <div className="flex items-center space-x-6">
+          <div className="bg-timeless2">
+            <div className="mx-auto flex h-10 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+              <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                {user && (
                   <Link
                     reloadDocument
                     to="/"
@@ -131,45 +122,46 @@ export default function Header(): ReactElement {
                     className="text-sm font-medium text-white hover:text-gray-100">
                     Sign out
                   </Link>
-                </div>
-              )}
-              {!user && (
-                <div className="flex items-center space-x-6">
-                  <Link
-                    to="/sign-in"
-                    className="text-sm font-medium text-white hover:text-gray-100">
-                    Sign in
-                  </Link>
-                  <Link
-                    to="/sign-up"
-                    className="text-sm font-medium text-white hover:text-gray-100">
-                    Create an account
-                  </Link>
-                </div>
-              )}
+                )}
+                {!user && (
+                  <>
+                    <Link
+                      to="/sign-up"
+                      className="text-sm font-medium text-white hover:text-gray-100">
+                      Create an account
+                    </Link>
+                    <span className="h-6 w-px bg-gray-600" aria-hidden="true" />
+                    <Link
+                      to="/sign-in"
+                      className="text-sm font-medium text-white hover:text-gray-100">
+                      Sign in
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Secondary navigation */}
-          <div className="bg-white">
+          <div className="bg-timeless1">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="border-b border-gray-200">
                 <div className="flex h-16 items-center justify-between">
                   {/* Logo (lg+) */}
-                  <div className="hidden lg:flex lg:flex-1 lg:items-center">
+                  <div className="hidden lg:flex lg:items-center">
                     <Link to="/">
                       <span className="sr-only">Timeless Fashion</span>
                       <img
                         className="h-8 w-auto"
-                        src="/images/logo.svg"
+                        src="/images/timelessLogo.png"
                         alt=""
                       />
                     </Link>
                   </div>
 
                   <div className="hidden h-full lg:flex">
-                    {/* Flyout menus */}
-                    <Popover.Group className="inset-x-0 bottom-0 px-4">
+                    {/* Mega menus */}
+                    <Popover.Group className="ml-8">
                       <div className="flex h-full justify-center space-x-8">
                         {navigation.pages.map((page) => (
                           <Link
@@ -187,7 +179,7 @@ export default function Header(): ReactElement {
                   <div className="flex flex-1 items-center lg:hidden">
                     <button
                       type="button"
-                      className="-ml-2 rounded-md bg-white p-2 text-gray-400"
+                      className="rounded-md bg-timeless1 p-2 text-gray-400"
                       onClick={() => setOpen(true)}>
                       <span className="sr-only">Open menu</span>
                       <Bars3Icon className="h-6 w-6" aria-hidden="true" />
@@ -197,24 +189,27 @@ export default function Header(): ReactElement {
                   {/* Logo (lg-) */}
                   <Link to="/" className="lg:hidden">
                     <span className="sr-only">Timeless Fashion</span>
-                    <img src="/images/logo.svg" alt="" className="h-8 w-auto" />
+                    <img
+                      src="/images/timelessLogo.png"
+                      alt=""
+                      className="h-8 w-auto"
+                    />
                   </Link>
 
                   <div className="flex flex-1 items-center justify-end">
                     <div className="flex items-center lg:ml-8">
-                      {/* Cart */}
-                      <div className="ml-4 flow-root lg:ml-8">
+                      <div className="flow-root">
                         <Link
                           to={!user ? '/sign-in' : `/cart/${user?.userId}`}
                           className="group -m-2 flex items-center p-2">
-                          <ShoppingBagIcon
+                          <ShoppingCartIcon
                             className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                             aria-hidden="true"
                           />
                           <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
                             {totalQuantity}
                           </span>
-                          <span className="sr-only">Items in cart</span>
+                          <span className="sr-only">items in cart</span>
                         </Link>
                       </div>
                     </div>

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Success(): ReactElement {
   return (
-    <div className="bg-white p-6  md:mx-auto">
+    <div className="bg-timeless1 flex-1 mt-24">
       <svg
         viewBox="0 0 24 24"
         className="text-green-600 w-16 h-16 mx-auto my-6">

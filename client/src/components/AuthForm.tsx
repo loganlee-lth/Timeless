@@ -18,7 +18,7 @@ export default function AuthForm({
 
   function handleDemoAccountClick() {
     setUsername('demo');
-    setPassword('abc');
+    setPassword('password');
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -33,7 +33,7 @@ export default function AuthForm({
       }
     }
     event.preventDefault();
-    if (event.currentTarget === null) throw new Error();
+    if (event.target === null) throw new Error();
     const formData = new FormData(event.currentTarget);
     const entries = Object.fromEntries(formData.entries());
     const username = entries.username as string;

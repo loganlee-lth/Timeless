@@ -26,11 +26,12 @@ export default function ProductDetails(): ReactElement {
       try {
         const product = await fetchProduct(productId);
         setProduct(product);
-        console.log(product);
       } catch (err) {
         setError(err);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
       }
     }
     if (productId) {

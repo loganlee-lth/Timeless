@@ -19,11 +19,12 @@ export default function Catalog(): ReactElement {
       try {
         const products = await fetchCatalog();
         setProducts(products);
-        console.log(products);
       } catch (err) {
         setError(err);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
       }
     }
     setIsLoading(true);
@@ -60,12 +61,10 @@ export default function Catalog(): ReactElement {
   }
 
   const filteredProducts = products?.filter((product) => {
-    // Filter by category
     const categoryMatch =
       selectedCategories.length === 0 ||
       selectedCategories.includes(product.category);
 
-    // Filter by price
     const priceMatch = selectedPrices.some((price) => {
       switch (price) {
         case '0':

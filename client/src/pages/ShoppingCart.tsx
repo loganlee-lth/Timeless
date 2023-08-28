@@ -1,4 +1,5 @@
 import React, { ReactElement, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
   fetchCart,
@@ -7,16 +8,19 @@ import {
   updateQuantity,
   checkout,
   removeAllItems,
+  ShoppingCartItem,
 } from '../lib';
 import AppContext from '../context/AppContext';
 import ShoppingCartContext from '../context/ShoppingCartContext';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 export default function ShoppingCart(): ReactElement {
+  const navigate = useNavigate();
   const { user, token } = useContext(AppContext);
   const { cart, setCart } = useContext(ShoppingCartContext);
 
   useEffect(() => {
+    if (!user) navigate('/sign-in');
     async function loadCart(userId: number) {
       try {
         const cart = await fetchCart(userId, token as string);
@@ -26,7 +30,7 @@ export default function ShoppingCart(): ReactElement {
       }
     }
     user && loadCart(user.userId);
-  }, [user, token, setCart]);
+  }, [user, token, setCart, navigate]);
 
   async function incrementQuantity(
     shoppingCartId: number,
@@ -108,7 +112,7 @@ export default function ShoppingCart(): ReactElement {
             <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
               <h3 className="sr-only">Items in your cart</h3>
               <ul className="divide-y divide-gray-200">
-                {cart.map((product: any, index) => (
+                {cart.map((product: ShoppingCartItem, index) => (
                   <li key={index} className="flex px-4 py-6 sm:px-6">
                     <div className="flex-shrink-0">
                       <img
@@ -226,11 +230,19 @@ export default function ShoppingCart(): ReactElement {
                 </div>
               </dl>
               <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                <button
-                  type="submit"
-                  className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
-                  Checkout
-                </button>
+                {cart.length !== 0 ? (
+                  <button
+                    type="submit"
+                    className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    Checkout
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                    Shopping Cart is Empty
+                  </button>
+                )}
               </div>
             </div>
           </div>

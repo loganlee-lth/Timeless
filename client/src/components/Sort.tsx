@@ -7,7 +7,7 @@ const sortOptions = [
   { name: 'Price: High to Low', value: 'desc', current: false },
 ];
 
-function classNames(...classes: any[]) {
+function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 

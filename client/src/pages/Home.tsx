@@ -16,7 +16,9 @@ export default function Home(): ReactElement {
       } catch (err) {
         setError(err);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 200);
       }
     }
     setIsLoading(true);
@@ -31,6 +33,7 @@ export default function Home(): ReactElement {
         {error instanceof Error ? error.message : 'Unknown Error'}
       </div>
     );
+
   return (
     <div className="bg-timeless1">
       {/* Hero section */}
